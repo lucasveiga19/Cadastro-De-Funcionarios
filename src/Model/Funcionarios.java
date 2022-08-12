@@ -1,4 +1,4 @@
-package Entidades;
+package Model;
 
 public class Funcionarios {
 
@@ -9,6 +9,19 @@ public class Funcionarios {
     private String genero;
     private String nomeMae;
     private boolean efetivo;
+
+    @Override
+    public String toString() {
+        return "Funcionarios Registrados" +
+                " Codigo = " + codigo +
+                ", Nome = '" + nome + '\'' +
+                ", CPF = '" + cpf + '\'' +
+                ", Data de Nascimento = '" + dataNascimento + '\'' +
+                ", Gênero = '" + genero + '\'' +
+                ", Nome da Mãe = '" + nomeMae + '\'' +
+                ", Efetivado = " + efetivo +
+                '}';
+    }
 
     public Long getCodigo() {
         return codigo;
