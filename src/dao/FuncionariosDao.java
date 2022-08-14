@@ -11,4 +11,5 @@ public interface FuncionariosDao {
     void deleteById(Integer id);
     Funcionarios findById(Integer id);
     List<Funcionarios> findAll();
+    List<Funcionarios> findByEfetivo(Boolean atv);
 }

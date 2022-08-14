@@ -148,6 +148,39 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
                 list.add(func);
             }
             return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionFactory.closeStatement(st);
+            ConnectionFactory.closeResultSet(rs);
+        }
+    }
+
+    @Override
+    public List<Funcionarios> findByEfetivo(Boolean atv) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM funcionario WHERE Efetivo = ?");
+            st.setBoolean(1, atv);
+            rs = st.executeQuery();
+
+            List<Funcionarios> list = new ArrayList<>();
+            Map<Integer, Funcionarios> map = new HashMap<>();
+
+            while (rs.next()) {
+
+                Funcionarios func = map.get(rs.getInt("Codigo"));
+
+                if (func == null) {
+                    func = instantiateFuncionarios(rs);
+                    map.put(rs.getInt("Codigo"), func);
+                }
+
+                list.add(func);
+            }
+            return list;
         } catch (SQLException e){
             throw new RuntimeException(e);
         } finally {
