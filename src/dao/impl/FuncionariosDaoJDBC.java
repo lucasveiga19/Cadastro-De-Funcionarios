@@ -41,15 +41,7 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
             st.setInt(1, id);
             rs = st.executeQuery();
             if(rs.next()){
-                Funcionarios func = new Funcionarios();
-                func.setCodigo(rs.getLong("codigo"));
-                func.setNome(rs.getString("nome"));
-                func.setCpf(rs.getString("cpf"));
-                func.setDataNascimento(rs.getString("dataNascimento"));
-                func.setGenero(rs.getString("genero"));
-                func.setNomeMae(rs.getString("nomeMae"));
-                func.setEfetivo(rs.getBoolean("efetivo"));
-                return func;
+                return instantiateFuncionarios(rs);
             }
             return null;
         } catch (SQLException e){
@@ -58,6 +50,18 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
             ConnectionFactory.closeStatement(st);
             ConnectionFactory.closeResultSet(rs);
         }
+    }
+
+    private Funcionarios instantiateFuncionarios(ResultSet rs)  throws SQLException{
+        Funcionarios func = new Funcionarios();
+        func.setCodigo(rs.getLong("codigo"));
+        func.setNome(rs.getString("nome"));
+        func.setCpf(rs.getString("cpf"));
+        func.setDataNascimento(rs.getString("dataNascimento"));
+        func.setGenero(rs.getString("genero"));
+        func.setNomeMae(rs.getString("nomeMae"));
+        func.setEfetivo(rs.getBoolean("efetivo"));
+        return func;
     }
 
     @Override
