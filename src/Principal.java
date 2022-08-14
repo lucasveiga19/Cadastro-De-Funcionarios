@@ -32,6 +32,10 @@ public class Principal {
         funcionarios.setNome("Joaquim");
         funcionariosDao.update(funcionarios);
         System.out.println("Update concluido");
+
+        System.out.println("\n=== Test 5: delete ===");
+        funcionariosDao.deleteById(4);
+        System.out.println("Delete concluido");
     }
 
 }
