@@ -54,7 +54,27 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
 
     @Override
     public void update(Funcionarios func) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement(
+                    "UPDATE funcionario " +
+                            "SET Nome = ?, Cpf = ?, DataNascimento = ?, Genero = ?, NomeMae = ?, Efetivo = ? " +
+                            "WHERE Codigo = ?");
 
+            st.setString(1, func.getNome());
+            st.setString(2, func.getCpf());
+            st.setDate(3, new Date(func.getDataNascimento().getTime()));
+            st.setString(4, func.getGenero());
+            st.setString(5, func.getNomeMae());
+            st.setBoolean(6, func.isEfetivo());
+            st.setLong(7, func.getCodigo());
+
+            st.executeUpdate();
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionFactory.closeStatement(st);
+        }
     }
 
     @Override

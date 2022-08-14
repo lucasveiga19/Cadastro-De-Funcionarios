@@ -27,6 +27,11 @@ public class Principal {
         funcionariosDao.insert(novoFuncionario);
         System.out.println("Novo funcionario cadastrado! Seu código é = "+novoFuncionario.getCodigo());
 
+        System.out.println("\n=== Test 4: update ===");
+        funcionarios = funcionariosDao.findById(1);
+        funcionarios.setNome("Joaquim");
+        funcionariosDao.update(funcionarios);
+        System.out.println("Update concluido");
     }
 
 }
