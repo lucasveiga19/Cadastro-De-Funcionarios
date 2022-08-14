@@ -5,6 +5,6 @@ import dao.impl.FuncionariosDaoJDBC;
 public class DaoFactory {
 
     public static FuncionariosDao createFuncionarioDao(){
-        return new FuncionariosDaoJDBC();
+        return new FuncionariosDaoJDBC(ConnectionFactory.getConnection());
     }
 }
