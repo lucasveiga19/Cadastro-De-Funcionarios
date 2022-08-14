@@ -8,7 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FuncionariosDaoJDBC implements FuncionariosDao {
     private final Connection conn;
@@ -66,6 +69,34 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
 
     @Override
     public List<Funcionarios> findAll() {
-        return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM funcionario ORDER BY Nome");
+
+            rs = st.executeQuery();
+
+            List<Funcionarios> list = new ArrayList<>();
+            Map<Integer, Funcionarios> map = new HashMap<>();
+
+            while (rs.next()) {
+
+                Funcionarios func = map.get(rs.getInt("Codigo"));
+
+                if (func == null) {
+                    func = instantiateFuncionarios(rs);
+                    map.put(rs.getInt("Codigo"), func);
+                }
+
+                list.add(func);
+            }
+            return list;
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionFactory.closeStatement(st);
+            ConnectionFactory.closeResultSet(rs);
+        }
     }
 }
