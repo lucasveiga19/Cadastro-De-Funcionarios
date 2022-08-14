@@ -1,18 +1,33 @@
 package Model;
 
+import java.util.Date;
+
 public class Funcionarios {
 
     private Long codigo;
     private String nome;
     private String cpf;
-    private String dataNascimento;
+    private Date dataNascimento;
     private String genero;
     private String nomeMae;
-    private boolean efetivo;
+    private Boolean efetivo;
+
+    public Funcionarios(Long codigo, String nome, String cpf, Date dataNascimento, String genero, String nomeMae, Boolean efetivo) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.genero = genero;
+        this.nomeMae = nomeMae;
+        this.efetivo = efetivo;
+    }
+
+    public Funcionarios() {
+    }
 
     @Override
     public String toString() {
-        return "Funcionarios Registrados" +
+        return "Funcionarios Registrados:" +
                 " Codigo = " + codigo +
                 ", Nome = '" + nome + '\'' +
                 ", CPF = '" + cpf + '\'' +
@@ -47,11 +62,11 @@ public class Funcionarios {
         this.cpf = cpf;
     }
 
-    public String getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

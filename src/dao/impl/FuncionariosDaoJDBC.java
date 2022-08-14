@@ -4,10 +4,7 @@ import Model.Funcionarios;
 import dao.ConnectionFactory;
 import dao.FuncionariosDao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +19,37 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
 
     @Override
     public void insert(Funcionarios func) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement(
+                    "INSERT INTO funcionario (Nome, Cpf, DataNascimento, Genero, NomeMae, Efetivo) " +
+                    "VALUES (?,?,?,?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS);
 
+            st.setString(1, func.getNome());
+            st.setString(2, func.getCpf());
+            st.setDate(3, new Date(func.getDataNascimento().getTime()));
+            st.setString(4, func.getGenero());
+            st.setString(5, func.getNomeMae());
+            st.setBoolean(6, func.isEfetivo());
+
+            int rowsAffected = st.executeUpdate();
+
+            if(rowsAffected > 0){
+                ResultSet rs = st.getGeneratedKeys();
+                if(rs.next()){
+                    long id = rs.getInt(1);
+                    func.setCodigo(id);
+                }
+                ConnectionFactory.closeResultSet(rs);
+            } else {
+                throw new RuntimeException();
+            }
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionFactory.closeStatement(st);
+        }
     }
 
     @Override
@@ -60,7 +87,7 @@ public class FuncionariosDaoJDBC implements FuncionariosDao {
         func.setCodigo(rs.getLong("codigo"));
         func.setNome(rs.getString("nome"));
         func.setCpf(rs.getString("cpf"));
-        func.setDataNascimento(rs.getString("dataNascimento"));
+        func.setDataNascimento(rs.getDate("dataNascimento"));
         func.setGenero(rs.getString("genero"));
         func.setNomeMae(rs.getString("nomeMae"));
         func.setEfetivo(rs.getBoolean("efetivo"));
