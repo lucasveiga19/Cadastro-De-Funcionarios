@@ -27,15 +27,14 @@ public class Funcionarios {
 
     @Override
     public String toString() {
-        return "Funcionarios Registrados:" +
+        return "Funcionario Registrado:" +
                 " Codigo = " + codigo +
                 ", Nome = '" + nome + '\'' +
                 ", CPF = '" + cpf + '\'' +
                 ", Data de Nascimento = '" + dataNascimento + '\'' +
                 ", Gênero = '" + genero + '\'' +
                 ", Nome da Mãe = '" + nomeMae + '\'' +
-                ", Efetivado = " + efetivo +
-                '}';
+                ", Efetivado = " + efetivo;
     }
 
     public Long getCodigo() {

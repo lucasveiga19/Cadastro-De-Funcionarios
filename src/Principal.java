@@ -37,7 +37,7 @@ public class Principal {
         funcionariosDao.deleteById(4);
         System.out.println("Delete concluido");
 
-        System.out.println("\n=== Test 6: findByEfetivoo ===");
+        System.out.println("\n=== Test 6: findByEfetivo ===");
         list = funcionariosDao.findByEfetivo(true);
         for(Funcionarios func : list){
             System.out.println(func);
